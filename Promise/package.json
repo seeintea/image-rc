@@ -1,0 +1,15 @@
+{
+  "name": "promise",
+  "version": "0.0.1",
+  "description": "Implementing the Promise/A+ specification",
+  "main": "index.js",
+  "author": "LevieGu",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "node_modules/.bin/promises-aplus-tests index.js"
+  },
+  "devDependencies": {
+    "promises-aplus-tests": "^2.1.2"
+  }
+}
