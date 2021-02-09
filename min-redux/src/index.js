@@ -1,10 +1,17 @@
 import React from 'react'
-import ReactDOM, { render } from 'react-dom'
+import ReactDOM, {
+    render
+} from 'react-dom'
 
-import { CREATE_NOTE, reducer } from './core/reducer'
+import {
+    CREATE_NOTE,
+    reducer
+} from './core/reducer'
 import createStore from './core/action'
 
 import NoteAppContainer from './component/NoteAppContainer.jsx'
+
+import Provider from './cjsx/Provider.jsx'
 
 const store = createStore(reducer)
 
@@ -14,7 +21,9 @@ store.dispatch({
 
 const renderApp = () => {
     ReactDOM.render(
-        <NoteAppContainer store={store} />,
+        <Provider store={store}>
+            <NoteAppContainer />
+        </Provider>,
         document.getElementById("root")
     )
 }

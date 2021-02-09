@@ -1,7 +1,5 @@
 import React from 'react'
-import PropType from 'prop-types'
-
-// https://juejin.cn/post/6923922875191656462#heading-9
+import PropTypes from 'prop-types'
 
 const connect = (
     mapStateToProps = () => ({}),
@@ -10,7 +8,7 @@ const connect = (
     class Connected extends React.Component {
 
         onStoreOrPropsChange(props) {
-            const store = this.context
+            const { store } = this.context
             const state = store.getState();
             const stateProps = mapStateToProps(state, props)
             const dispatchProps = mapDispatchToProps(store.dispatch, props)
@@ -40,8 +38,8 @@ const connect = (
 
     }
 
-    Connected.contextType = {
-        store: PropType.object
+    Connected.contextTypes = {
+        store: PropTypes.object
     }
 
 
