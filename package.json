@@ -7,7 +7,7 @@
     "build": "craco build",
     "test": "craco test",
     "prepare": "husky install",
-    "commit": "git-cz"
+    "gz": "git-cz"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
