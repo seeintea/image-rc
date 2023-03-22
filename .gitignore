@@ -1,8 +1,9 @@
 .vscode/
 
-/target
+**/target
+**/pkg
+**/bin
+
+**/Cargo.lock
 **/*.rs.bk
-Cargo.lock
-bin/
-pkg/
-wasm-pack.log
+**/wasm-pack.log
