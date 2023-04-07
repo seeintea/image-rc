@@ -7,3 +7,5 @@
 **/Cargo.lock
 **/*.rs.bk
 **/wasm-pack.log
+
+.DS_Store
