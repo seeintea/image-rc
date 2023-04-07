@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>image resize by web</title>
+</head>
+
+<body>
+  <canvas id="canvas"></canvas>
+
+  <script>
+    const image = new Image();
+    image.src = "./assets/picture.jpeg";
+
+    image.onload = () => {
+
+      const { width, height } = image;
+
+      const canvas = document.getElementById("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d", { willReadFrequently: true });
+      ctx.drawImage(image, 0, 0, width, height);
+
+      // resize
+      const scale = 0.75;
+      const i_scale = 1 / 0.75;
+      const resizeWidth = width * scale;
+      const resizeHeight = height * scale;
+      const resizeCanvas = document.createElement("canvas");
+      resizeCanvas.width = resizeWidth;
+      resizeCanvas.height = resizeHeight;
+      const resizeCtx = resizeCanvas.getContext("2d");
+
+      const time = performance.now();
+
+      for (let y = 0; y < resizeHeight; y += 1) {
+        for (let x = 0; x < resizeWidth; x += 1) {
+          const scaleX = Math.floor(x * i_scale);
+          const scaleY = Math.floor(y * i_scale);
+          const rgba = { r: 0, g: 0, b: 0, a: 0 };
+          let count = 0;
+          for (let j = 0; j < i_scale; j += 1) {
+            for (let i = 0; i < i_scale; i += 1) {
+              const { data } = ctx.getImageData(scaleX + i, scaleY + j, 1, 1);
+              rgba.r += data[0];
+              rgba.g += data[1];
+              rgba.b += data[2];
+              rgba.a += data[3];
+              count += 1;
+            }
+          }
+          resizeCtx.fillStyle = `rgba(${rgba.r / count}, ${rgba.g / count}, ${rgba.b / count}, ${rgba.a / count}`;
+          resizeCtx.fillRect(x, y, 1, 1);
+        }
+      }
+
+      console.log(`resize time: ${(performance.now() - time) / 1000} s.`);
+
+      document.body.append(resizeCanvas);
+    }
+  </script>
+</body>
+
+</html>

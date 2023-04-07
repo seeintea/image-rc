@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>image resize by wasm</title>
+</head>
+
+<body>
+  <canvas id="canvas"></canvas>
+
+  <script type="module">
+    import init, { resize } from '../crates/image_gz/pkg/image_gz.js'
+
+    await init()
+
+    const image = new Image();
+    image.src = "./assets/picture.jpeg";
+
+    image.onload = () => {
+
+      const { width, height } = image;
+
+      const canvas = document.getElementById("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d", { willReadFrequently: true });
+      ctx.drawImage(image, 0, 0, width, height);
+
+      const time = performance.now();
+      const scale = 0.75;
+      const resizeWidth = width * scale;
+      const resizeHeight = height * scale;
+
+      const data = Uint8Array.from(ctx.getImageData(0, 0, width, height).data);
+      let resizeData = resize(data, width, height, resizeWidth, resizeHeight);
+      resizeData = Uint8ClampedArray.from(resizeData)
+
+      const resizeCanvas = document.createElement('canvas');
+      resizeCanvas.width = resizeWidth;
+      resizeCanvas.height = resizeHeight;
+      const resizeCtx = resizeCanvas.getContext('2d');
+      const imageData = new ImageData(resizeData, resizeWidth, resizeHeight);
+      resizeCtx.putImageData(imageData, 0, 0);
+
+      document.body.append(resizeCanvas);
+
+      console.log(`resize time: ${(performance.now() - time) / 1000} s.`);
+    }
+  </script>
+</body>
+
+</html>
