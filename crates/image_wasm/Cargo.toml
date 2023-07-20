@@ -1,18 +1,16 @@
 [package]
-name = "image-gz"
+name = "image_wasm"
 version = "0.0.1"
 authors = ["seeintea <gu.lw@foxmail.com>"]
-description = "image compression by rust"
-repository = "https://github.com/seeintea/image-gz"
+description = "image resize and compression by rust"
+repository = "https://github.com/seeintea/image-rc"
 license = 'MIT'
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [lib]
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-wasm-bindgen = "0.2.84"
-console_error_panic_hook = "0.1.7"
-image_tool = { version = "0.0.1", path = "../image_tool" }
+wasm-bindgen = "0.2.87"
+image_rc = { version = "0.1.0", path = "../image_rc" }

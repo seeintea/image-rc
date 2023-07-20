@@ -1,5 +1,4 @@
-.vscode/
-
+# rust
 **/target
 **/pkg
 **/bin
@@ -8,4 +7,10 @@
 **/*.rs.bk
 **/wasm-pack.log
 
+
+# web
+/**/node_modules/
+
+# system
+.vscode/
 .DS_Store

@@ -1,0 +1,11 @@
+{
+  "name": "nobita",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "build:wasm": "./script/build.wasm.sh"
+  },
+  "dependencies": {
+    "image-rc": "./crates/image_wasm/pkg"
+  }
+}

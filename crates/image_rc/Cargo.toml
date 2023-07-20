@@ -1,9 +1,11 @@
 [package]
-name = "image_tool"
-version = "0.0.1"
+name = "image_rc"
+version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+base64 = "0.21.2"
 image = "0.24.6"
+regex = "1.9.1"

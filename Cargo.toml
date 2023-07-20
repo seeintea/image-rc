@@ -1,5 +1,5 @@
 [workspace]
 members = [
-  "crates/image_gz",
-  "crates/image_tool"
+  "crates/image_rc",
+  "crates/image_wasm"
 ]
