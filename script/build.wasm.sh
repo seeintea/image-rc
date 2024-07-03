@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cd crates/image_wasm
+cd crates/image-wasm
 wasm-pack build --release --target web

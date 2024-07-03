@@ -1,5 +1,5 @@
 [package]
-name = "image_wasm"
+name = "image-wasm"
 version = "0.0.1"
 authors = ["seeintea <gu.lw@foxmail.com>"]
 description = "image resize and compression by rust"
@@ -16,7 +16,7 @@ default = ['console_error_panic_hook']
 
 [dependencies]
 wasm-bindgen = "0.2.92"
-image_rc = { version = "0.1.0", path = "../image_rc" }
+image-rc = { version = "0.1.0", path = "../image-rc" }
 console_error_panic_hook = { version = "0.1.7", optional = true }
 
 [profile.release]
