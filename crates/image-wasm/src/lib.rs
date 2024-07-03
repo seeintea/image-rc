@@ -1,46 +1,31 @@
-use image_rc::{
-    compress::compress::compress, load::ImageItem, resize::resize::resize_image as resize,
-};
 use wasm_bindgen::prelude::*;
 
-#[wasm_bindgen]
-pub fn resize_image(
-    raw: Vec<u8>,
-    origin_width: u32,
-    origin_height: u32,
-    dist_width: u32,
-    dist_height: u32,
-) -> Vec<u8> {
-    let image_item = ImageItem::new(origin_width, origin_height, raw);
-    let image = resize(
-        image_item.get_image(),
-        origin_width,
-        origin_height,
-        dist_width,
-        dist_height,
-    );
-    image.to_rgb8().to_vec()
+use image_rc::{load_form_buffer, load_from_base64, rc_compress, rc_resize};
+
+#[wasm_bindgen(js_name = "resizeImageData")]
+pub fn resize_common(data: Vec<u8>, dist_width: u32, dist_height: u32) -> Vec<u8> {
+    let converter = load_form_buffer(data);
+    let converter = rc_resize(&converter, dist_width, dist_height);
+    converter.buffer()
 }
 
-#[wasm_bindgen]
-pub fn resize_image_base64(chars: &str, dist_width: u32, dist_height: u32) -> Vec<u8> {
-    let image_item = ImageItem::load_from_base64(chars);
-    let origin_image = image_item.get_image();
-    let origin_width = origin_image.width();
-    let origin_height = origin_image.height();
-    let image = resize(
-        origin_image,
-        origin_width,
-        origin_height,
-        dist_width,
-        dist_height,
-    );
-    image.to_rgb8().to_vec()
+#[wasm_bindgen(js_name = "resizeDataURL")]
+pub fn resize_base64(data: &str, dist_width: u32, dist_height: u32) -> Vec<u8> {
+    let converter = load_from_base64(data);
+    let converter = rc_resize(&converter, dist_width, dist_height);
+    converter.buffer()
 }
 
-#[wasm_bindgen]
-pub fn compress_image(raw: Vec<u8>, width: u32, height: u32, quality: u8) -> String {
-    let image_item = ImageItem::new(width, height, raw);
-    let base64 = compress(image_item, quality);
-    base64
+#[wasm_bindgen(js_name = "compressImageData")]
+pub fn compress_common(data: Vec<u8>, quality: u8) -> Vec<u8> {
+    let converter = load_form_buffer(data);
+    let converter = rc_compress(&converter, quality);
+    converter.buffer()
+}
+
+#[wasm_bindgen(js_name = "compressDataURL")]
+pub fn compress_base64(data: &str, quality: u8) -> Vec<u8> {
+    let converter = load_from_base64(data);
+    let converter = rc_compress(&converter, quality);
+    converter.buffer()
 }
