@@ -11,6 +11,14 @@ edition = "2021"
 [lib]
 crate-type = ["cdylib", "rlib"]
 
+[features]
+default = ['console_error_panic_hook']
+
 [dependencies]
-wasm-bindgen = "0.2.87"
+wasm-bindgen = "0.2.92"
 image_rc = { version = "0.1.0", path = "../image_rc" }
+console_error_panic_hook = { version = "0.1.7", optional = true }
+
+[profile.release]
+# Tell `rustc` to optimize for small code size.
+opt-level = "s"

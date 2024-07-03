@@ -6,6 +6,6 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-base64 = "0.21.2"
-image = "0.24.6"
-regex = "1.9.1"
+base64 = "0.22.1"
+image = "0.25.1"
+regex = "1.10.5"

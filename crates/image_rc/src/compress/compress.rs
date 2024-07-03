@@ -2,13 +2,13 @@ use std::io::Cursor;
 
 use base64::{engine::general_purpose, Engine as _};
 
-use image::{load_from_memory, ImageOutputFormat};
+use image::{load_from_memory, ImageFormat};
 
 use crate::load::ImageItem;
 
 use super::utils::is_rgba8;
 
-pub fn compress(image_item: ImageItem, quality: u8) -> String {
+pub fn compress(image_item: ImageItem, _quality: u8) -> String {
     let image = image_item.get_image();
     let can_use_png = is_rgba8(&image_item.get_raw());
     let compress_image;
@@ -18,7 +18,7 @@ pub fn compress(image_item: ImageItem, quality: u8) -> String {
         compress_image = image;
         format_input = "data:image/png;base64,"
     } else {
-        let out_format = ImageOutputFormat::Jpeg(quality);
+        let out_format = ImageFormat::Jpeg;
         let mut buffer = Cursor::new(vec![]);
         image.write_to(&mut buffer, out_format).unwrap();
         let slice = buffer.get_ref().as_slice();
