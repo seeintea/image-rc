@@ -2,7 +2,7 @@ mod resize_item;
 
 use std::io::Cursor;
 
-use image::{imageops::FilterType, GenericImageView, ImageBuffer, Rgba};
+use image::{imageops::FilterType, DynamicImage, GenericImageView, ImageBuffer, Rgba};
 use resize_item::ResizeItem;
 
 use crate::{
@@ -21,7 +21,7 @@ pub fn resize(converter: &Converter, dist_width: u32, dist_height: u32) -> Conve
     let mut buffer = Vec::new();
 
     if scale_x > 1. && scale_y > 1. {
-        let mut resize_buffer = ImageBuffer::new(dist_height, dist_height);
+        let mut resize_buffer = ImageBuffer::new(dist_width, dist_height);
 
         let [scale_x_u32, scale_y_u32] = [scale_x, scale_y].map(|x| x as u32);
 
@@ -40,10 +40,14 @@ pub fn resize(converter: &Converter, dist_width: u32, dist_height: u32) -> Conve
                 resize_buffer.put_pixel(x, y, Rgba(resize_item.average()));
             }
         }
-
-        buffer = resize_buffer.to_vec();
+        let _ = DynamicImage::ImageRgba8(resize_buffer)
+            .write_to(&mut Cursor::new(&mut buffer), converter.format())
+            .expect(&logger(
+                LoggerLevel::Error,
+                "custom resize write buffer error",
+            ));
     } else {
-        image.resize(dist_width, dist_height, FilterType::CatmullRom);
+        image.resize_exact(dist_width, dist_height, FilterType::CatmullRom);
 
         let _ = image
             .write_to(&mut Cursor::new(&mut buffer), converter.format())
